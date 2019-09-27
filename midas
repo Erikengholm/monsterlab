@@ -1,0 +1,93 @@
+package midas;
+import java.util.Random;
+import java.util.Scanner;
+public class midas{
+	public static void main(String[] args) {
+		Scanner scan=new Scanner(System.in);
+		Random rand= new Random();
+		boolean dark = false;
+		int hp=100,road=0;
+		String fate;
+		String[] path = new String[5]; 
+		for(int c=0;c<path.length;c++) {
+			hardmode(path,rand.nextInt(3)+1,c);
+		}
+		while(true) {
+			if(road==path.length) {
+				System.out.println("\ndu vann");
+				break;
+			}
+			System.out.println("gör dit val \nhöger\nvänster\nframåt");
+			System.out.println(hp+" hp");
+			System.out.println(path[road]);
+			if(hp<=0) {
+				System.out.println("du förlorade");
+				break;
+			}
+			
+			fate=scan.nextLine();
+			if(fate.compareToIgnoreCase(path[road])==0) {
+				road++;
+			}
+			else {
+				hp=fight(hp);
+				road=0;
+			}
+				
+		}
+		System.out.println("hoppas du hade skoj");
+		
+		
+	}
+	
+	 private static int fight(int hp) {
+		 int turn=1,monsterhp=100, attacke;
+		 Random rand=new Random();
+		 System.out.println("ett monster kommer var bered\n");
+		 
+		 while(true) {
+			 if(hp<=0) {
+				 System.out.println("\ndu dog villken grymm värld vi lever i");	 
+				 break;
+			 }
+			 else if(monsterhp<=0) {
+				 System.out.println("monstret dog och du står segrande");		 
+				 break;
+			 }
+			 if((turn%2)==0) {
+				 attacke= rand.nextInt(25)+1;
+				 monsterhp=monsterhp -attacke ;
+				 System.out.println("du gjorde "+attacke+" skada"+" monstret hp är "+monsterhp);
+			 }
+			 else {
+				 attacke=rand.nextInt(10)+1;
+				 hp=hp-attacke;
+				 System.out.println("\nmonstret gjorde "+attacke+" skada"+" din hp är "+hp);
+			 }
+			 
+			 turn++;
+				 
+		 }
+		 if((rand.nextInt(2)+1)==1) {
+			 hp+=10;
+		 }
+		 return hp;
+		 
+	}
+
+	static void hardmode(String[] i,int r,int index) {
+		 switch(r) {
+		 case 1:
+			 i[index]="vänster";
+		 break;
+		 case 2:
+			 i[index]="framåt";
+		 break;
+		 case 3:
+			 i[index]="höger";
+		 break;
+		 default:
+			 i[index]="höger";		 }
+	 }
+		 
+}
